@@ -14,12 +14,13 @@ import { getPosts } from '../api/posts';
 
 // utils
 // worker sagas
-function* getPostsSaga() {
+function* getPostsSaga(action) {
   try {
-    const response = yield call(getPosts);
+    const { after } = action.payload;
+    const response = yield call(getPosts, after);
     if (response && response.data) {
       const posts = response.data.data.children.map(c => ({ ...c.data }));
-      yield put(getPostsSuccess('successPosts', posts));
+      yield put(getPostsSuccess('successPosts', posts, response.data.data.after));
     } else {
       yield put(getPostsFailed('someError', response.data));
     }

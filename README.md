@@ -23,3 +23,7 @@
 #Decisions
 Taking a look at the video, the left menu is visible everytime when the screen is wide enough. On the contrary, when the screen is not wide enough it behaves like a swipe menu. So i might render a swipe menu only when the screen is tight.
 I have decided to use Sagas pattern with Redux, because i feel more comfortable with this pattern.
+
+Regarding the sidebar, i have found `react-sidebar`, the swipe has been disabled for iOS because of the feautre "swipe-to-back". Eventhough the video suggest the functionality works on an iOS device, i decided to continue with this library.
+
+Checking how to paginate the reddit listing, is somewhat different i'm used to.

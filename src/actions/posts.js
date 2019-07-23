@@ -5,18 +5,22 @@ export const actionTypes = {
   SET_CURRENT_POST: 'SET_CURRENT_POST',
 };
 
-export function getPosts() {
+export function getPosts(after) {
   return {
     type: actionTypes.GET_POSTS,
+    payload: {
+      after,
+    },
   };
 }
 
-export function getPostsSuccess(sucessMessage, posts) {
+export function getPostsSuccess(sucessMessage, posts, after) {
   return {
     type: actionTypes.GET_POSTS_SUCCESS,
     payload: {
       sucessMessage,
       posts,
+      after,
     },
   };
 }

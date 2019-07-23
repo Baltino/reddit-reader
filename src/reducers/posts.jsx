@@ -3,6 +3,8 @@ import { AJAX_STATUS } from '../actions/constants';
 
 const initialState = {
   currentPost: {},
+  apiAfter: '',
+  apiCount: 0,
   user: { visited: {} },
   getStatus: AJAX_STATUS.firstCheck,
   posts: [],
@@ -15,6 +17,9 @@ export default function citiesReducer(state = initialState, action) {
     case actionTypes.GET_POSTS:
       return {
         ...state,
+        successMessage: '',
+        errorMessage: '',
+        posts: [],
         getStatus: AJAX_STATUS.loading,
       };
     case actionTypes.GET_POSTS_SUCCESS:
@@ -23,6 +28,7 @@ export default function citiesReducer(state = initialState, action) {
         successMessage: action.payload.successMessage,
         getStatus: AJAX_STATUS.success,
         posts: action.payload.posts || [],
+        apiAfter: action.payload.after,
       };
     case actionTypes.GET_POSTS_FAILED:
       return {
