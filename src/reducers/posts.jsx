@@ -2,7 +2,8 @@ import { actionTypes } from '../actions/posts';
 import { AJAX_STATUS } from '../actions/constants';
 
 const initialState = {
-  currentPost: undefined,
+  currentPost: {},
+  user: { visited: {} },
   getStatus: AJAX_STATUS.firstCheck,
   posts: [],
   successMessage: '',
@@ -21,7 +22,7 @@ export default function citiesReducer(state = initialState, action) {
         ...state,
         successMessage: action.payload.successMessage,
         getStatus: AJAX_STATUS.success,
-        posts: action.payload.userCities || [],
+        posts: action.payload.posts || [],
       };
     case actionTypes.GET_POSTS_FAILED:
       return {

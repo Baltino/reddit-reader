@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 // reactstrap components
 import {
   Container,
@@ -7,47 +6,36 @@ import {
   Col,
 } from 'reactstrap';
 import { connect } from 'react-redux';
-// core components
-import { getPosts } from '../actions/posts';
 
+import { PostItemModel } from '../components/PostItem';
 
-class Home extends React.Component {
+const Home = (props) => {
+  const { currentPost } = props;
 
-  componendDidMount() {
-    const { getPosts } = this.props;
-    getPosts();
-  }
-
-  render() {
-    const { posts } = this.props;
-    return (
-      <Container>
-        <Row>
-          <Col md="6">
-            <h2>App</h2>
-          </Col>
-          <Col md="6">
-            Body
-          </Col>
-        </Row>       
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <Row>
+        <Col md="6">
+          <h2>App</h2>
+        </Col>
+        <Col md="6">
+          {currentPost.title}
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
 Home.propTypes = {
-  posts: PropTypes.shape([]).isRequired,
-  getPosts: PropTypes.func.isRequired,
+  currentPost: PostItemModel.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts.posts,
+    currentPost: state.posts.currentPost,
   };
 };
 
-const HomeContainer = connect(mapStateToProps, {
-  getPosts,
-})(Home);
+const HomeContainer = connect(mapStateToProps, {})(Home);
 
 export default HomeContainer;

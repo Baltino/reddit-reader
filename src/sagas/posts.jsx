@@ -1,6 +1,6 @@
 // npm packages
 import {
-  takeLatest, call, put, select,
+  takeLatest, call, put,
 } from 'redux-saga/effects';
 
 import {
@@ -17,8 +17,9 @@ import { getPosts } from '../api/posts';
 function* getPostsSaga() {
   try {
     const response = yield call(getPosts);
-    if (response) {
-      yield put(getPostsSuccess('successCity', response.data));
+    if (response && response.data) {
+      const posts = response.data.data.children.map(c => ({ ...c.data }));
+      yield put(getPostsSuccess('successPosts', posts));
     } else {
       yield put(getPostsFailed('someError', response.data));
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from 'react-sidebar';
 import HomeContainer from './containers/HomeContainer';
-
+import ListPostsContainer from './containers/ListPostsContainer';
 import './App.css';
 
 function Main() {
@@ -9,7 +9,7 @@ function Main() {
   return (
     <div className="App">
       <Sidebar
-        sidebar={<b>Sidebar content</b>}
+        sidebar={<ListPostsContainer />}
         open={sidebarOpen}
         onSetOpen={setSidebarOpen}
         styles={{ sidebar: { background: "white" } }}
@@ -17,8 +17,8 @@ function Main() {
         <button type="button" onClick={() => setSidebarOpen(true)}>
           Open sidebar
         </button>
+        <HomeContainer />
       </Sidebar>
-      <HomeContainer />
     </div>
   );
 }
