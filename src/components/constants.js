@@ -10,4 +10,5 @@ export const colors = {
   white: '#fff',
   black: '#000',
   orange: 'orange',
+  blue: '#0000ee',
 };

@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import styled from 'styled-components';
 import { sizes, colors } from './constants';
+import { validThumbnail } from '../utils/utils';
 
-
-function isValidThumbnail(t) {
-  return t && t.indexOf('https://') === 0;
-}
 
 function PostItem(props) {
   const { item, user, onClick } = props;
@@ -16,11 +14,11 @@ function PostItem(props) {
         <ReadCircle read={user.visited[item.id]} />
         <p>
           {item.author}
-          <span>{item.created_utc}</span>
+          <span>{moment.utc(item.created * 1000).fromNow()}</span>
         </p>
       </TopBar>
       <Middle>
-        <img src={isValidThumbnail(item.thumbnail) ? item.thumbnail : '/logo.png'} alt={item.author} />
+        <img src={validThumbnail(item.thumbnail)} alt={item.author} />
         <p>{item.title}</p>
         <i className="fas fa-chevron-right" />
       </Middle>
@@ -31,7 +29,7 @@ function PostItem(props) {
         </Button>
         <Comments>
           {item.num_comments}
-          comments
+          <span>comments</span>
         </Comments>
       </BottomBar>
     </Container>
@@ -60,6 +58,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${colors.black};
+  border-bottom: 2px solid ${colors.gray};
+  padding: 5px 5px 10px 1px;
 `;
 const TopBar = styled.div`
   float: left;
@@ -67,6 +67,8 @@ const TopBar = styled.div`
   color: ${colors.white};
   text-overflow: ellipsis;
   p {
+    display: inline-block;
+    padding-left: 5px;
     font-size: ${sizes.bigFont}px;
   }
   span {
@@ -94,6 +96,7 @@ const Middle = styled.div`
   }
   i {
     color: white;
+    padding-top: ${sizes.maxThumbnailHeight / 3}px;
   }
 `;
 const BottomBar = styled.div`
@@ -105,14 +108,18 @@ const BottomBar = styled.div`
 `;
 const Comments = styled.div`
   color: ${colors.orange};
+  span {
+    padding-left: 5px;
+  }
 
 `;
 const ReadCircle = styled.div`
-  background-color: ${colors.blue}
-  visibility: ${props => props.read ? 'hidden' : 'show'};
-  border-radius: 15px;
-  width: 15px;
-  height: 15px;
+  background-color: ${colors.blue};
+  display: inline-block;
+  visibility: ${props => props.read ? 'hidden' : 'visible'};
+  border-radius: 10px;
+  width: 10px;
+  height: 10px;
 `;
 
 const Button = styled.div`

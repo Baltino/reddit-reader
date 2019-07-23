@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 
 import { PostItemModel } from '../components/PostItem';
+import { validThumbnail } from '../utils/utils';
 
 const Home = (props) => {
   const { currentPost } = props;
@@ -15,11 +16,10 @@ const Home = (props) => {
   return (
     <Container>
       <Row>
-        <Col md="6">
-          <h2>App</h2>
-        </Col>
-        <Col md="6">
-          {currentPost.title}
+        <Col md="12">
+          <h1>{currentPost.author}</h1>
+          <img src={validThumbnail(currentPost.thumbnail)} alt={currentPost.author} style={{ margin: '20px auto', display: 'block' }} />
+          <p> {currentPost.title}</p>
         </Col>
       </Row>
     </Container>
