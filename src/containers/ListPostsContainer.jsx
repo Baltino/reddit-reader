@@ -6,6 +6,7 @@ import {
   Col,
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { sizes } from '../components/constants';
 // core components
 import PostItem, { PostItemModel } from '../components/PostItem';
 import { getPosts } from '../actions/posts';
@@ -21,7 +22,7 @@ class Home extends React.Component {
   render() {
     const { posts, user } = this.props;
     return (
-      <Row style={{ width: 200 }}>
+      <Row style={{ width: sizes.sidebarWidth }}>
         <Col md="12">
           {posts.map(p => <PostItem item={p} user={user} key={p.id} />)}
         </Col>

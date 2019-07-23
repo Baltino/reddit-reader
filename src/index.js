@@ -9,6 +9,7 @@ import store from './store';
 import saga from './sagas';
 import { sagaMiddleware } from './middleware';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const App = () => (
   <Provider store={store}>
