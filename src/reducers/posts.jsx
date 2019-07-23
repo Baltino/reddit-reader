@@ -37,11 +37,20 @@ export default function citiesReducer(state = initialState, action) {
         getStatus: AJAX_STATUS.error,
         errorMessage: action.payload.errorMessage,
       };
-    case actionTypes.SET_CURRENT_POST:
+    case actionTypes.SET_CURRENT_POST: {
+      const { post } = action.payload;
       return {
         ...state,
-        currentPost: action.payload.post,
+        currentPost: post,
+        user: {
+          ...state.user,
+          visited: {
+            ...state.user.visited,
+            [post.id]: true,
+          },
+        },
       };
+    }
     default:
       return state;
   }
