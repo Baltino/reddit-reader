@@ -44,9 +44,11 @@ class Main extends React.Component {
           onSetOpen={this.onSetSidebarOpen}
           styles={{ sidebar: { background: "white" } }}
         >
-          <button type="button" onClick={() => this.onSetSidebarOpen(true)}>
-            Open sidebar
-          </button>
+          {!sidebarDocked && (
+            <button type="button" onClick={() => this.onSetSidebarOpen(true)}>
+              Open sidebar
+            </button>
+          )}
           <HomeContainer />
         </Sidebar>
 

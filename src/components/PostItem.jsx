@@ -3,6 +3,58 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { sizes, colors } from './constants';
 
+
+function isValidThumbnail(t) {
+  return t && t.indexOf('https://') === 0;
+}
+
+function PostItem(props) {
+  const { item, user, onClick } = props;
+  return (
+    <Container onClick={() => onClick(item)}>
+      <TopBar>
+        <ReadCircle read={user.visited[item.id]} />
+        <p>
+          {item.author}
+          <span>{item.created_utc}</span>
+        </p>
+      </TopBar>
+      <Middle>
+        <img src={isValidThumbnail(item.thumbnail) ? item.thumbnail : '/logo.png'} alt={item.author} />
+        <p>{item.title}</p>
+        <i className="fas fa-chevron-right" />
+      </Middle>
+      <BottomBar>
+        <Button>
+          <i className="fas fa-times-circle" style={{ color: colors.orange }} />
+          Dismiss Post
+        </Button>
+        <Comments>
+          {item.num_comments}
+          comments
+        </Comments>
+      </BottomBar>
+    </Container>
+  );
+}
+
+export const PostItemModel = PropTypes.shape({
+  id: PropTypes.string,
+  title: PropTypes.string,
+  author: PropTypes.string,
+  created_utc: PropTypes.number,
+  thumbnail: PropTypes.string,
+  num_comments: PropTypes.number,
+});
+
+PostItem.propTypes = {
+  item: PostItemModel.isRequired,
+  user: PropTypes.shape({
+    visited: PropTypes.shape({}).isRequired,
+  }).isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,6 +92,9 @@ const Middle = styled.div`
     max-height: ${sizes.maxThumbnailHeight}px;
     cover: fit;
   }
+  i {
+    color: white;
+  }
 `;
 const BottomBar = styled.div`
   flex: 1;
@@ -64,54 +119,5 @@ const Button = styled.div`
   cursor: pointer;
   color: ${colors.white};
 `;
-function isValidThumbnail(t) {
-  return t && t.indexOf('https://') === 0;
-}
-
-function PostItem(props) {
-  const { item, user } = props;
-  return (
-    <Container>
-      <TopBar>
-        <ReadCircle read={user.visited[item.id]} />
-        <p>
-          {item.author}
-          <span>{item.created_utc}</span>
-        </p>
-      </TopBar>
-      <Middle>
-        <img src={isValidThumbnail(item.thumbnail) ? item.thumbnail : '/logo.png'} alt={item.author} />
-        <p>{item.title}</p>
-        <i className="fas fa-chevron-right"  />
-      </Middle>
-      <BottomBar>
-        <Button>
-          <i className="fas fa-times-circle" style={{ color: colors.orange }}/>
-          Dismiss Post
-        </Button>
-        <Comments>
-          {item.num_comments}
-          comments
-        </Comments>
-      </BottomBar>
-    </Container>
-  );
-}
-
-export const PostItemModel = PropTypes.shape({
-  id: PropTypes.string,
-  title: PropTypes.string,
-  author: PropTypes.string,
-  created_utc: PropTypes.number,
-  thumbnail: PropTypes.string,
-  num_comments: PropTypes.number,
-});
-
-PostItem.propTypes = {
-  item: PostItemModel.isRequired,
-  user: PropTypes.shape({
-    visited: PropTypes.shape({}).isRequired,
-  }).isRequired,
-};
 
 export default PostItem;

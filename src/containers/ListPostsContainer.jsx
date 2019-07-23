@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { sizes } from '../components/constants';
 // core components
 import PostItem, { PostItemModel } from '../components/PostItem';
-import { getPosts } from '../actions/posts';
+import { getPosts, setCurrentPost } from '../actions/posts';
 
 
 class Home extends React.Component {
@@ -20,11 +20,11 @@ class Home extends React.Component {
   }
 
   render() {
-    const { posts, user } = this.props;
+    const { posts, user, setCurrentPost } = this.props;
     return (
       <Row style={{ width: sizes.sidebarWidth }}>
         <Col md="12">
-          {posts.map(p => <PostItem item={p} user={user} key={p.id} />)}
+          {posts.map(p => <PostItem item={p} user={user} key={p.id} onClick={setCurrentPost} />)}
         </Col>
       </Row>
     );
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
 
 const HomeContainer = connect(mapStateToProps, {
   getPosts,
+  setCurrentPost,
 })(Home);
 
 export default HomeContainer;
