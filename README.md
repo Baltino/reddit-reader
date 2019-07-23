@@ -27,3 +27,7 @@ I have decided to use Sagas pattern with Redux, because i feel more comfortable 
 Regarding the sidebar, i have found `react-sidebar`, the swipe has been disabled for iOS because of the feautre "swipe-to-back". Eventhough the video suggest the functionality works on an iOS device, i decided to continue with this library.
 
 Checking how to paginate the reddit listing, is somewhat different i'm used to.
+
+I don't understand what should i propose to download the image to the gallery, since when pressing an image a pop up shows different actions regarding the image. Within this options we can find "download".
+
+On purpose the first time the list is rendered, i don't want to use the `after` pagination, because when you refresh the user might want to start from the top.

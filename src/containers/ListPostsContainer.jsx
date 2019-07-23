@@ -10,8 +10,8 @@ import { getPosts, setCurrentPost } from '../actions/posts';
 class Home extends React.Component {
 
   componentDidMount() {
-    const { getPosts, apiAfter } = this.props;
-    getPosts(apiAfter);
+    const { getPosts } = this.props;
+    getPosts();
   }
 
   render() {
@@ -19,11 +19,11 @@ class Home extends React.Component {
     return (
       <div style={{ width: sizes.sidebarWidth}} id="posts-list">
         {posts.map(p => <PostItem item={p} user={user} key={p.id} onClick={setCurrentPost} />)}
-        <div style={{ float: 'right' }}>
-          <span style={{ marginRight: 20 }} onClick={() => getPosts()} >
+        <div >
+          <span style={{ flaot: 'left' }} onClick={() => getPosts()} >
             Reset
           </span>
-          <span onClick={() => getPosts(null, apiAfter)} >
+          <span style={{ float: 'right' }} onClick={() => getPosts(apiAfter)} >
             <i className="fas fa-chevron-right" />
           </span>
         </div>

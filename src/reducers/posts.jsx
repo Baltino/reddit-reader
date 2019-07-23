@@ -20,6 +20,7 @@ export default function citiesReducer(state = initialState, action) {
         successMessage: '',
         errorMessage: '',
         posts: [],
+        apiAfter: action.payload.after,
         getStatus: AJAX_STATUS.loading,
       };
     case actionTypes.GET_POSTS_SUCCESS:
