@@ -7,6 +7,7 @@ import {
   actionTypes,
   getPostsSuccess,
   getPostsFailed,
+  dismissAllPostsSuccess,
 } from '../actions/posts';
 
 // actions
@@ -29,7 +30,17 @@ function* getPostsSaga(action) {
   }
 }
 
+function sleep(t) {
+  return new Promise(res => setTimeout(() => res(), t));
+}
+
+function* dismissAllPostsSaga() {
+  yield call(sleep, 1000);
+  yield put(dismissAllPostsSuccess('success'));
+}
+
 
 export default function* postsSaga() {
   yield takeLatest(actionTypes.GET_POSTS, getPostsSaga);
+  yield takeLatest(actionTypes.DISMISS_ALL_POSTS, dismissAllPostsSaga);
 }

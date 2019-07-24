@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -7,9 +7,10 @@ import { validThumbnail } from '../utils/utils';
 
 
 function PostItem(props) {
-  const { item, user, onClick } = props;
+  const { item, user, onClick, onDismiss } = props;
+  const [status, setStatus] = useState('visible');
   return (
-    <Container onClick={() => onClick(item)}>
+    <Container onClick={() => onClick(item)} className={status}>
       <TopBar>
         <ReadCircle read={user.visited[item.id]} />
         <p>
@@ -23,7 +24,7 @@ function PostItem(props) {
         <i className="fas fa-chevron-right" />
       </Middle>
       <BottomBar>
-        <Button>
+        <Button onClick={(ev) => { ev.stopPropagation(); setStatus('removing'); setTimeout(() => onDismiss(item), 300); }}>
           <i className="fas fa-times-circle" style={{ color: colors.orange }} />
           Dismiss Post
         </Button>
@@ -45,21 +46,29 @@ export const PostItemModel = PropTypes.shape({
   num_comments: PropTypes.number,
 });
 
+export const UserModel = PropTypes.shape({
+  visited: PropTypes.shape({}).isRequired,
+});
+
 PostItem.propTypes = {
   item: PostItemModel.isRequired,
-  user: PropTypes.shape({
-    visited: PropTypes.shape({}).isRequired,
-  }).isRequired,
+  user: UserModel.isRequired,
   onClick: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired,
 };
 
-const Container = styled.div`
+const Container = styled.li`
   display: flex;
   flex-direction: column;
   width: 100%;
   background-color: ${colors.black};
   border-bottom: 2px solid ${colors.gray};
   padding: 5px 5px 10px 1px;
+  transition: 0.3s all ease;
+
+  &.removing {
+    margin-left: -300px;
+  }
 `;
 const TopBar = styled.div`
   float: left;

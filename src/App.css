@@ -1,0 +1,16 @@
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  transition: 1s all ease;
+}
+ul.removing {
+  margin-left: 500px;
+  opacity: 0;
+}
+ul.removing li {
+}
+li {
+
+  transition: 0.3s all ease;
+}

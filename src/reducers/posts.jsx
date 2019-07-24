@@ -10,6 +10,7 @@ const initialState = {
   posts: [],
   successMessage: '',
   errorMessage: '',
+  statusRemovingPosts: '',
 };
 
 export default function citiesReducer(state = initialState, action) {
@@ -20,7 +21,7 @@ export default function citiesReducer(state = initialState, action) {
         successMessage: '',
         errorMessage: '',
         posts: [],
-        apiAfter: action.payload.after,
+        apiAfter: action.payload.after || '',
         getStatus: AJAX_STATUS.loading,
       };
     case actionTypes.GET_POSTS_SUCCESS:
@@ -49,6 +50,29 @@ export default function citiesReducer(state = initialState, action) {
             [post.id]: true,
           },
         },
+      };
+    }
+    case actionTypes.DISMISS_POST: {
+      const { post } = action.payload;
+      return {
+        ...state,
+        currentPost: (state.currentPost && post.id === state.currentPost.id)
+          ? {} : state.currentPost,
+        posts: state.posts.filter(p => p.id !== post.id),
+      };
+    }
+    case actionTypes.DISMISS_ALL_POSTS: {
+      return {
+        ...state,
+        currentPost: {},
+        statusRemovingPosts: 'removing',
+      };
+    }
+    case actionTypes.DISMISS_ALL_POSTS_SUCCESS: {
+      return {
+        ...state,
+        statusRemovingPosts: '',
+        posts: [],
       };
     }
     default:

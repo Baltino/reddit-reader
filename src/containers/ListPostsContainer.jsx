@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sizes } from '../components/constants';
 // core components
-import PostItem, { PostItemModel } from '../components/PostItem';
-import { getPosts, setCurrentPost } from '../actions/posts';
+import PostItem, { PostItemModel, UserModel } from '../components/PostItem';
+import { getPosts, setCurrentPost, dismissPost, dismissAllPosts } from '../actions/posts';
 
 
 class Home extends React.Component {
+
 
   componentDidMount() {
     const { getPosts } = this.props;
@@ -15,13 +16,18 @@ class Home extends React.Component {
   }
 
   render() {
-    const { posts, user, setCurrentPost, getPosts, apiAfter } = this.props;
+    const { posts, user, setCurrentPost, getPosts, apiAfter, dismissPost, dismissAllPosts, statusRemovingPosts } = this.props;
     return (
-      <div style={{ width: sizes.sidebarWidth}} id="posts-list">
-        {posts.map(p => <PostItem item={p} user={user} key={p.id} onClick={setCurrentPost} />)}
-        <div >
+      <div style={{ width: sizes.sidebarWidth }} id="posts-list">
+        <ul className={statusRemovingPosts}>
+          {posts.map(p => <PostItem item={p} user={user} key={p.id} onClick={setCurrentPost} onDismiss={dismissPost} />)}
+        </ul>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span style={{ flaot: 'left' }} onClick={() => getPosts()} >
             Reset
+          </span>
+          <span style={{ flaot: 'left' }} onClick={() => dismissAllPosts()} >
+            Dismiss all
           </span>
           <span style={{ float: 'right' }} onClick={() => getPosts(apiAfter)} >
             <i className="fas fa-chevron-right" />
@@ -34,9 +40,12 @@ class Home extends React.Component {
 
 Home.propTypes = {
   posts: PropTypes.arrayOf(PostItemModel).isRequired,
-  user: PropTypes.shape({}).isRequired,
+  user: UserModel.isRequired,
   getPosts: PropTypes.func.isRequired,
   apiAfter: PropTypes.string.isRequired,
+  dismissPost: PropTypes.func.isRequired,
+  dismissAllPosts: PropTypes.func.isRequired,
+  statusRemovingPosts: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -44,12 +53,15 @@ const mapStateToProps = (state) => {
     posts: state.posts.posts,
     user: state.posts.user,
     apiAfter: state.posts.apiAfter,
+    statusRemovingPosts: state.posts.statusRemovingPosts,
   };
 };
 
 const HomeContainer = connect(mapStateToProps, {
   getPosts,
   setCurrentPost,
+  dismissPost,
+  dismissAllPosts,
 })(Home);
 
 export default HomeContainer;
