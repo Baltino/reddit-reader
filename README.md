@@ -36,7 +36,7 @@ The dissmissed posts won't be preserved since the user might want to check it ou
 
 I would want to move UserModel from 'PostItem.jsx' and every model to another dir.
 
-I decided to manage the transition within the PostItem, with react hooks
+I decided to manage the transition within the PostItem, with react hooks.
 
 There are containers with lots of information regarding styles. I would need to change them.
 
